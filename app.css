@@ -1,14 +1,15 @@
 body {
+  padding: 0;
+  margin: 0;
   width: 100%;
   height: 100%;
 }
+
 button {
-  position:absolute;
-  display: block;
-  width: 200px;
-  height: 50px;
-  left: 50%;
-  margin-left: -100px;
+  display: inline-block;
+  position: relative;
+  top: -11px;
+  height: 30px;
 }
 
 .link {
@@ -28,13 +29,59 @@ button {
 }
 
 .ctrl {
-  fill: #f00;
+  fill: #897BAF;
 }
 
 .service {
-  fill: #0f0;
+  fill: #FFEFAA;
 }
 
 .dao {
-  fill: #00f;
+  fill: #D46A6A;
+}
+
+.top {
+  line-height: 30px;
+  width: 426px;
+  height: 30px;
+  left: 50%;
+  margin-left: -213px;
+  position: absolute;
+}
+
+.top ul {
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+}
+
+.top li {
+  display: inline-block;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.top span {
+  display: inline-block;
+  position: relative;
+  top: -9px;
+}
+
+.box {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+}
+
+.ctrl .box {
+  background-color: #897BAF;
+}
+
+.service .box {
+  background-color: #FFEFAA;
+}
+
+.dao .box {
+  background-color: #D46A6A;
 }

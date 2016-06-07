@@ -1,9 +1,9 @@
 var width = window.innerWidth,
     height = window.innerHeight,
     totalClusters = 30,
-    mode = "type",
-    linkDistanceTypeMode = Math.sqrt(Math.pow(width / 3, 2) + Math.pow(height / 3, 2)) | 0,
-    linkDistanceClusterMode = 30;
+    slicing = "horizontal",
+    linkDistanceTypeMode = Math.sqrt(Math.pow(width / 4, 2) + Math.pow(height / 4, 2)) | 0,
+    linkDistanceClusterMode = (0.4 * Math.sqrt(Math.pow(width / 7, 2) + Math.pow(height / 6, 2))) | 0;
 
 var fociByType = {
       ctrl: {x: (width / 2) | 0, y: (height / 3) | 0},
@@ -44,11 +44,13 @@ var node = svg.selectAll("circle"),
     link = svg.selectAll(".link")
         .attr("class", "link");
 
-document.getElementById('toggle_mode').onclick = function (e) {
-  mode = mode === "type" ? "cluster" : "type";
+var toggleButton = document.getElementById('toggle_mode');
+toggleButton.onclick = function (e) {
+  slicing = slicing === "horizontal" ? "vertical" : "horizontal";
+  toggleButton.innerHTML = slicing === "horizontal" ? "Toggle vertical slicing" : "Toggle horizontal slicing";
   force.stop();
 
-  force.linkDistance(mode === "type" ? linkDistanceTypeMode : linkDistanceClusterMode);
+  force.linkDistance(slicing === "horizontal" ? linkDistanceTypeMode : linkDistanceClusterMode);
   force.start();
   return false;
 };
@@ -56,7 +58,7 @@ document.getElementById('toggle_mode').onclick = function (e) {
 function tick(e) {
   var k = .1 * e.alpha;
 
-  if (mode === "type")
+  if (slicing === "horizontal")
     nodes.forEach(function (o, i) {
       o.y += (o.typeFocus.y - o.y) * k;
       o.x += (o.typeFocus.x - o.x) * k;
@@ -66,30 +68,6 @@ function tick(e) {
       o.y += (o.clusterFocus.y - o.y) * k;
       o.x += (o.clusterFocus.x - o.x) * k;
     });
-
-  node = node
-      .attr("class", function (d) {
-        return "node " + d.className;
-      })
-      .attr("cx", function (d) {
-        return d.x;
-      })
-      .attr("cy", function (d) {
-        return d.y;
-      })
-      .attr("r", 8)
-      .data(nodes)
-      .call(force.drag);
-
-  node.enter().append("circle")
-      .attr("cx", function (d) {
-        return d.x;
-      })
-      .attr("cy", function (d) {
-        return d.y;
-      })
-      .attr("r", 8)
-      .call(force.drag);
 
   link = link
       .attr("class", "link")
@@ -123,4 +101,32 @@ function tick(e) {
         return d.target.y;
       });
 
+  node = node
+      .attr("class", function (d) {
+        return "node " + d.className;
+      })
+      .attr("cx", function (d) {
+        return d.x;
+      })
+      .attr("cy", function (d) {
+        return d.y;
+      })
+      .attr("r", 8)
+      .data(nodes)
+      .call(force.drag);
+
+  node.enter().append("circle")
+      .attr("cx", function (d) {
+        return d.x;
+      })
+      .attr("cy", function (d) {
+        return d.y;
+      })
+      .attr("r", 8)
+      .call(force.drag);
+
+
+
 }
+
+window.onresize = function(){ location.reload(); }
