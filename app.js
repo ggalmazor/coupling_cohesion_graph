@@ -1,5 +1,5 @@
 var width = window.innerWidth,
-    height = window.innerHeight - 100,
+    height = window.innerHeight,
     totalClusters = 30,
     mode = "type",
     linkDistanceTypeMode = Math.sqrt(Math.pow(width / 3, 2) + Math.pow(height / 3, 2)) | 0,
